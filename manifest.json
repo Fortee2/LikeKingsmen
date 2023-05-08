@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Like Kingsmen Posts",
+  "version": "1.0",
+  "description": "Automatically like Kingsmen Software's posts with the specified aria-label value",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
