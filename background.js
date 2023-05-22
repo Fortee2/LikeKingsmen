@@ -1,20 +1,10 @@
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-  if (request.action === 'likeKingsmenPosts') {
+  if (request.action === 'likeAndRepostForKingsmen') {
     try {
       const tab = await getActiveTab();
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        function: likeKingsmenPosts,
-      });
-    } catch (error) {
-      console.error('Error executing script:', error);
-    }
-  } else if (request.action === 'repostForKingsmen') {
-    try {
-      const tab = await getActiveTab();
-      await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: repostForKingsmen,
+        function: likeAndRepostForKingsmen,
       });
     } catch (error) {
       console.error('Error executing script:', error);
@@ -22,14 +12,36 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   }
 });
 
-function likeKingsmenPosts() {
-  const buttons = document.querySelectorAll(
-    'button[aria-label="React Like to Kingsmen Software’s post"][aria-pressed="false"]'
-  );
 
-  for (const button of buttons) {
-    button.click();
-  }
+function likeAndRepostForKingsmen() {
+  // Select all parent divs
+  const parentDivs = document.querySelectorAll('div.ember-view');
+
+  parentDivs.forEach((div) => {
+    // Check for an unclicked like button within this div
+    const likeButton = div.querySelector(
+      'button[aria-label="React Like to Kingsmen Software’s post"][aria-pressed="false"]'
+    );
+
+    if (likeButton) {
+      // If found, click the like button
+      likeButton.click();
+
+      // Check for a repost button within this div
+      const repostButton = div.querySelector('button[aria-expanded="false"] li-icon[type="repost"]');
+      if (repostButton) {
+        // If found, click the repost button
+        repostButton.click();
+
+        // Wait for the dropdown to appear and click on the div
+        waitForElement('.social-reshare-button__sharing-as-is-dropdown-item-icon')
+          .then((element) => {
+            const parentDiv = element.parentElement;
+            parentDiv.click();
+          });
+      }
+    }
+  });
 }
 
 function repostForKingsmen() {

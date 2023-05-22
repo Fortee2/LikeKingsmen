@@ -1,7 +1,3 @@
-document.getElementById('likePosts').addEventListener('click', () => {
-  chrome.runtime.sendMessage({ action: 'likeKingsmenPosts' });
-});
-
-document.getElementById('repostForKingsmen').addEventListener('click', () => {
-  chrome.runtime.sendMessage({ action: 'repostForKingsmen' });
+document.getElementById('likeAndRepostButton').addEventListener('click', () => {
+  chrome.runtime.sendMessage({ action: 'likeAndRepostForKingsmen' });
 });
