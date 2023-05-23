@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Like Kingsmen Posts",
-  "version": "1.0",
-  "description": "Automatically like Kingsmen Software's posts with the specified aria-label value",
+  "version": "1.09",
+  "description": "Automatically like Kingsmen Software's posts",
   "permissions": [
     "activeTab",
     "scripting"
